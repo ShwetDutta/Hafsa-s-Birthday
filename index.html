@@ -13,7 +13,9 @@
       body {
         font-family: 'Quicksand', sans-serif;
         background-color: #fdf2f8;
+        /* Allow vertical scrolling but prevent horizontal shifts */
         overflow-x: hidden;
+        overflow-y: auto;
       }
       .font-romantic { font-family: 'Dancing Script', cursive; }
       .font-elegant { font-family: 'Playfair Display', serif; }
@@ -27,18 +29,19 @@
         background: linear-gradient(-45deg, #fce7f3, #fae8ff, #f3e8ff, #fff1f2);
         background-size: 400% 400%;
         animation: gradientBG 15s ease infinite;
+        background-attachment: fixed;
       }
 
       @keyframes float {
         0% { transform: translateY(0px) rotate(0deg); opacity: 0; }
         20% { opacity: 0.8; }
-        100% { transform: translateY(-100vh) rotate(360deg); opacity: 0; }
+        100% { transform: translateY(-110vh) rotate(360deg); opacity: 0; }
       }
       .particle {
         position: fixed;
         pointer-events: none;
         animation: float var(--duration) linear infinite;
-        bottom: -20px;
+        bottom: -50px;
         z-index: 10;
       }
 
@@ -94,7 +97,7 @@
     }
     </script>
   </head>
-  <body class="animate-gradient overflow-hidden">
+  <body class="animate-gradient">
     <div id="root"></div>
     <div class="noise"></div>
     <script type="module" src="index.tsx"></script>

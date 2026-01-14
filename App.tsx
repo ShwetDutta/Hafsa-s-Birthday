@@ -41,13 +41,13 @@ const App: React.FC = () => {
   };
 
   return (
-    <div className="relative min-h-screen w-full flex flex-col items-center justify-center p-4 md:p-8 overflow-hidden">
+    <div className="relative min-h-screen w-full flex flex-col items-center justify-center p-4 md:p-8">
       <Particles />
       
       {isJoyFlashing && <div className="joy-overlay bg-white animate-[flash-joy_0.6s_ease-out_forwards]"></div>}
 
       {/* Persistent UI elements */}
-      <div className="fixed top-6 right-6 z-50">
+      <div className="fixed top-4 right-4 md:top-6 md:right-6 z-50">
         <button 
           onClick={() => setMusicEnabled(!musicEnabled)}
           className={`p-3 rounded-full backdrop-blur-md border border-white/40 shadow-lg transition-all ${musicEnabled ? 'bg-pink-400 text-white' : 'bg-white/60 text-pink-400'}`}
@@ -58,7 +58,7 @@ const App: React.FC = () => {
 
       {/* 1. INTRO SECTION */}
       {currentSection === Section.Intro && (
-        <div className="text-center z-20 flex flex-col items-center gap-8 max-w-2xl animate-in fade-in zoom-in duration-1000">
+        <div className="text-center z-20 flex flex-col items-center gap-8 max-w-2xl animate-in fade-in zoom-in duration-1000 py-12">
           <div className="relative">
             <Cat className="w-32 h-32 md:w-48 md:h-48" />
             <div className="absolute -top-4 -right-4 bg-white/80 p-2 rounded-2xl shadow-sm text-sm font-romantic pointer-events-none">
@@ -79,7 +79,7 @@ const App: React.FC = () => {
 
       {/* 2. LOVE LETTER */}
       {currentSection === Section.Letter && (
-        <div className="z-20 w-full max-w-lg animate-in slide-in-from-bottom duration-700">
+        <div className="z-20 w-full max-w-lg animate-in slide-in-from-bottom duration-700 py-12">
           <div className="paper-texture p-8 md:p-12 rounded-xl shadow-2xl relative border-t-4 border-pink-300">
              <div className="absolute top-4 right-4 text-pink-100 opacity-50"><Cat className="w-16 h-16" pose="sleeping" /></div>
             <h2 className="text-4xl font-romantic text-pink-700 mb-6">Dearest You,</h2>
@@ -102,17 +102,17 @@ const App: React.FC = () => {
 
       {/* 3. INTERACTIVE MEMORIES */}
       {currentSection === Section.Memories && (
-        <div className="z-20 w-full max-w-4xl animate-in fade-in duration-1000">
+        <div className="z-20 w-full max-w-4xl animate-in fade-in duration-1000 py-12">
           <div className="text-center mb-12">
             <h2 className="text-4xl md:text-5xl font-elegant text-pink-800 mb-4">Fragments of Us</h2>
             <p className="text-pink-600">Click a card to reveal a whispered memory.</p>
           </div>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 px-2">
             {MEMORIES.map((m) => (
               <div 
                 key={m.id}
                 onClick={() => toggleMemory(m.id)}
-                className={`cursor-pointer transition-all duration-500 transform ${visibleMemories.has(m.id) ? 'scale-105' : 'hover:scale-102'} h-64`}
+                className={`cursor-pointer transition-all duration-500 transform ${visibleMemories.has(m.id) ? 'scale-105' : 'hover:scale-102'} min-h-[16rem] h-auto`}
               >
                 <div className={`h-full w-full bg-gradient-to-br ${m.gradient} rounded-3xl shadow-lg p-8 flex flex-col justify-center items-center text-center overflow-hidden border-4 border-white`}>
                   {!visibleMemories.has(m.id) ? (
@@ -140,13 +140,13 @@ const App: React.FC = () => {
 
       {/* 4. REASONS I LOVE YOU */}
       {currentSection === Section.Reasons && (
-        <div className="z-20 w-full max-w-2xl text-center">
+        <div className="z-20 w-full max-w-2xl text-center py-12">
           <h2 className="text-4xl md:text-5xl font-elegant text-pink-800 mb-8">My Heart's Reasons</h2>
           
-          <div className="relative h-[400px] flex items-center justify-center">
+          <div className="relative min-h-[450px] flex flex-col items-center justify-center">
             <div 
               onClick={handleReasonClick}
-              className="w-64 h-64 bg-pink-400 rounded-full flex items-center justify-center cursor-pointer shadow-xl hover:scale-110 active:scale-90 transition-transform relative group"
+              className="w-56 h-56 md:w-64 md:h-64 bg-pink-400 rounded-full flex items-center justify-center cursor-pointer shadow-xl hover:scale-110 active:scale-90 transition-transform relative group z-10"
             >
               <div className="absolute -top-4 -right-4 bg-white px-3 py-1 rounded-full text-pink-600 text-sm font-bold shadow-md">
                 {revealedReasons}/{REASONS_I_LOVE_YOU.length}
@@ -156,21 +156,21 @@ const App: React.FC = () => {
             </div>
 
             {revealedReasons > 0 && (
-              <div key={revealedReasons} className="absolute inset-x-0 -bottom-12 p-6 bg-white/60 backdrop-blur-md rounded-2xl shadow-inner border border-white/50 animate-in slide-in-from-bottom fade-in duration-500">
-                <p className="text-xl md:text-2xl font-romantic text-pink-900 italic">
+              <div key={revealedReasons} className="mt-12 p-6 bg-white/60 backdrop-blur-md rounded-2xl shadow-inner border border-white/50 animate-in slide-in-from-bottom fade-in duration-500 max-w-md">
+                <p className="text-xl md:text-2xl font-romantic text-pink-900 italic leading-relaxed">
                   "{REASONS_I_LOVE_YOU[revealedReasons - 1]}"
                 </p>
               </div>
             )}
           </div>
 
-          <div className="mt-20">
+          <div className="mt-12">
             {revealedReasons >= 10 ? (
               <Button onClick={() => next(Section.Celebration)}>
                 Let's Celebrate!
               </Button>
             ) : (
-              <p className="text-pink-500 font-medium">Keep clicking the heart to reveal more reasons... (at least 10!)</p>
+              <p className="text-pink-500 font-medium px-4">Keep clicking the heart to reveal more reasons... (at least 10!)</p>
             )}
           </div>
         </div>
@@ -178,7 +178,7 @@ const App: React.FC = () => {
 
       {/* 5. CELEBRATION */}
       {currentSection === Section.Celebration && (
-        <div className="z-20 w-full max-w-lg text-center flex flex-col items-center animate-in zoom-in duration-700">
+        <div className="z-20 w-full max-w-lg text-center flex flex-col items-center animate-in zoom-in duration-700 py-12">
           <h2 className="text-4xl md:text-5xl font-elegant text-pink-800 mb-12">Make a Wish!</h2>
           
           <div className="relative mb-12 flex flex-col items-center">
@@ -205,7 +205,7 @@ const App: React.FC = () => {
               Blow the Candles 🎂
             </Button>
           ) : (
-            <div className="space-y-6 animate-in fade-in duration-1000">
+            <div className="space-y-6 animate-in fade-in duration-1000 px-4">
               <p className="text-3xl font-romantic text-pink-700">May all your wishes come true! ✨</p>
               <Button onClick={() => next(Section.Promises)}>
                 A Promise for the Future
@@ -217,7 +217,7 @@ const App: React.FC = () => {
 
       {/* 6. PROMISES */}
       {currentSection === Section.Promises && (
-        <div className="z-20 w-full max-w-2xl text-center space-y-12">
+        <div className="z-20 w-full max-w-2xl text-center space-y-12 py-12 px-4">
           <h2 className="text-4xl md:text-5xl font-elegant text-pink-800">My Promises to You</h2>
           
           <div className="space-y-6">
@@ -242,7 +242,7 @@ const App: React.FC = () => {
 
       {/* 7. CLOSING */}
       {currentSection === Section.Closing && (
-        <div className="z-20 w-full max-w-2xl text-center flex flex-col items-center gap-8 animate-in zoom-in duration-1000">
+        <div className="z-20 w-full max-w-2xl text-center flex flex-col items-center gap-8 animate-in zoom-in duration-1000 py-12 px-4">
           <div className="flex items-center gap-4">
              <Cat className="w-24 h-24" pose="sleeping" />
              <Cat className="w-24 h-24 transform scale-x-[-1]" pose="sleeping" />
